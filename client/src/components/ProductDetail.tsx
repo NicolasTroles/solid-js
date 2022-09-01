@@ -1,7 +1,7 @@
 import { createMemo, Component } from "solid-js";
 import { useParams } from "solid-app-router";
-import { products, cart } from "../store";
-import { Product } from "../product";
+import { products, cart } from "../stores/store";
+import { Product } from "../types/product";
 
 export const ProductDetail: Component = () => {
   const { id } = useParams<{

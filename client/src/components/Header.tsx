@@ -1,7 +1,8 @@
-import { Component, createMemo, For } from "solid-js";
+import { Component, For } from "solid-js";
 import { Link } from "solid-app-router";
 
-import { cart, search, onSetSearch } from "../store";
+import { cart, search, onSetSearch } from "../stores/store";
+import { Product } from "../types/product";
 
 export const Header: Component = () => {
   return (
@@ -24,7 +25,7 @@ export const Header: Component = () => {
         <span class="tooltip cart">
           <div>Cart ({cart.products.length})</div>
           <For each={cart.products}>
-            {(p) => (
+            {(p: Product) => (
               <div class="flex flex-row my-2">
                 <img src={p.image} alt={p.title} class="h-8 mr-2" />
                 <h3 class="title text-md truncate flex-grow">{p.title}</h3>

@@ -1,6 +1,6 @@
 import { createResource, createSignal } from "solid-js";
 import { createMutable } from "solid-js/store";
-import type { Product } from "./product";
+import type { Product } from "../types/product";
 
 export const cart = createMutable({
   products: JSON.parse(window.localStorage.getItem("cart") || "[]"),
