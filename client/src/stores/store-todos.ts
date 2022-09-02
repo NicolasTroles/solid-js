@@ -1,42 +1,18 @@
-import { createResource, createSignal } from "solid-js";
-import {
-  createClient,
-  defaultExchanges,
-  subscriptionExchange,
-} from "@urql/core";
+import { createResource } from "solid-js";
+import { createClient } from "@urql/core";
+
 import type { Todos } from "../types/todos";
 
-import { SubscriptionClient } from "subscriptions-transport-ws";
-import { pipe, subscribe } from "wonka";
-
-const subscriptionClient = new SubscriptionClient("ws://localhost:4000", {
-  reconnect: true,
-});
-
 export const client = createClient({
-  url: "http://0.0.0.0:4000/graphql",
-  exchanges: [
-    ...defaultExchanges,
-    subscriptionExchange({
-      forwardSubscription: (operation) => subscriptionClient.request(operation),
-    }),
-  ],
+  url: "http://localhost:4000/graphql",
 });
-
-// interface Todo {
-//   id: string;
-//   text: string;
-//   done: boolean;
-// }
-
-// const [todos, setTodos] = createSignal<Todo[]>([]);
 
 const query = `
     query {
         getTodos {
-        id
-        done
-        text
+          id
+          done
+          text
         }
     }
 `;
@@ -67,6 +43,7 @@ export const addNewTodo = async (text: string) => {
     .mutation(mutationNewTodo, { text })
     .toPromise()
     .then(() => {
+      console.log("refetch");
       refetch();
     });
 };
@@ -80,5 +57,10 @@ const mutationUpdateDone = `
 `;
 
 export const updateDone = async (id: string, done: boolean) => {
-  client.mutation(mutationUpdateDone, { id, done }).toPromise();
+  client
+    .mutation(mutationUpdateDone, { id, done })
+    .toPromise()
+    .then(() => {
+      refetch();
+    });
 };
