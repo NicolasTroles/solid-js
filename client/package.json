@@ -21,6 +21,8 @@
     "@urql/core": "^3.0.2",
     "graphql": "^16.6.0",
     "solid-app-router": "^0.1.3",
-    "solid-js": "^1.0.7"
+    "solid-js": "^1.0.7",
+    "subscriptions-transport-ws": "^0.11.0",
+    "wonka": "^6.0.0"
   }
 }

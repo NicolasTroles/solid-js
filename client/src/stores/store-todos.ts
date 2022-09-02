@@ -1,10 +1,35 @@
-import { createResource } from "solid-js";
-import { createClient } from "@urql/core";
+import { createResource, createSignal } from "solid-js";
+import {
+  createClient,
+  defaultExchanges,
+  subscriptionExchange,
+} from "@urql/core";
 import type { Todos } from "../types/todos";
+
+import { SubscriptionClient } from "subscriptions-transport-ws";
+import { pipe, subscribe } from "wonka";
+
+const subscriptionClient = new SubscriptionClient("ws://localhost:4000", {
+  reconnect: true,
+});
 
 export const client = createClient({
   url: "http://0.0.0.0:4000/graphql",
+  exchanges: [
+    ...defaultExchanges,
+    subscriptionExchange({
+      forwardSubscription: (operation) => subscriptionClient.request(operation),
+    }),
+  ],
 });
+
+// interface Todo {
+//   id: string;
+//   text: string;
+//   done: boolean;
+// }
+
+// const [todos, setTodos] = createSignal<Todo[]>([]);
 
 const query = `
     query {
