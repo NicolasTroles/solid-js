@@ -1,11 +1,9 @@
 import { createPubSub } from "@graphql-yoga/subscription";
 
-import type { Todo } from "./index";
+import type { Todo } from "../../types/todo";
 
-// 1
 export type PubSubChannels = {
   todos: [{ todos: Todo[] }];
 };
 
-// 2
 export const pubSub = createPubSub<PubSubChannels>();

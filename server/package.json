@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "graphql": "^16.6.0",
-    "graphql-yoga": "^2.13.11"
+    "graphql-yoga": "^2.13.11",
+    "node-fetch": "^2.1.2"
   }
 }
